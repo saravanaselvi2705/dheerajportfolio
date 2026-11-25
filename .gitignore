@@ -3,3 +3,4 @@ dist/
 .astro/
 public/videos/
 *.mp4
+!public/hero-bg.mp4

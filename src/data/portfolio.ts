@@ -7,7 +7,7 @@ export type WorkCategory =
 
 export interface WorkItem {
   id: string;
-  videoSrc: string;
+  driveFileId: string;
   title: string;
   client: string;
   category: Exclude<WorkCategory, 'All'>;
@@ -29,8 +29,11 @@ export interface ExperienceItem {
   tags: string[];
 }
 
-// Screenwriting Series — Raghunath Paleri
-export const HERO_VIDEO_STREAM_URL = '/videos/raghunath-trailer.mp4';
+export const DRIVE_FOLDER_URL =
+  'https://drive.google.com/drive/folders/1lXGKB4gSheozYimxkuvLpFqqI8KhYoXS';
+
+// Compressed silent H.264 loop committed via .gitignore exception (!public/hero-bg.mp4)
+export const HERO_VIDEO_STREAM_URL = '/hero-bg.mp4';
 
 export const CONTACT_INFO = {
   name: 'Dheeraj C',
@@ -54,7 +57,7 @@ export const WORK_CATEGORIES: WorkCategory[] = [
 export const WORKS: WorkItem[] = [
   {
     id: 'wt-theater-ad',
-    videoSrc: '/videos/wt-theater-ad.mp4',
+    driveFileId: '1QP2pzxXOpzSbSUuQau2OtFx9ca6vloGr',
     title: 'Wise Talkies — Cinema Theater Spot',
     client: 'Wise Talkies',
     category: 'Motion Graphics',
@@ -68,7 +71,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'adoor-trailer',
-    videoSrc: '/videos/adoor-trailer.mp4',
+    driveFileId: '1--qsowMuLIFVx39LgHPiTXkjS_B_bcPj',
     title: 'Masterclass Trailer — Adoor Gopalakrishnan',
     client: 'Wise Talkies',
     category: 'Testimonials',
@@ -82,7 +85,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'gopinath-trailer',
-    videoSrc: '/videos/gopinath-trailer.mp4',
+    driveFileId: '1VYmzIKjvEo4oCpS4XC_W3wVdGpv0LG3v',
     title: 'Masterclass Trailer — Gopinath Muthukad',
     client: 'Wise Talkies',
     category: 'Testimonials',
@@ -96,7 +99,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'raghunath-trailer',
-    videoSrc: '/videos/raghunath-trailer.mp4',
+    driveFileId: '1LPqeIj9kNeTWVXRst4KO_XHqhwdAME7P',
     title: 'Screenwriting Series — Raghunath Paleri',
     client: 'Wise Talkies',
     category: 'Tutorials',
@@ -110,7 +113,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'shaji-trailer',
-    videoSrc: '/videos/shaji-trailer.mp4',
+    driveFileId: '1lQJ3YTwVDX05MlUdVveXDJxvjyWr7R6J',
     title: 'Cinematography Cut — Shaji N. Karun',
     client: 'Wise Talkies',
     category: 'Tutorials',
@@ -124,7 +127,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'chef-letha-trailer',
-    videoSrc: '/videos/chef-letha-trailer.mp4',
+    driveFileId: '1uhWGgnrEqhM98aBgsLAXge0R1Q4yuH7X',
     title: 'Culinary Craft — Chef Letha Series',
     client: 'Wise Talkies',
     category: 'Tutorials',
@@ -138,7 +141,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'wt-casting-call',
-    videoSrc: '/videos/wt-casting-call.mp4',
+    driveFileId: '12jt5dyp38otUmAP2Voynj6DRXBaRAmip',
     title: 'Casting Call — High-Retention Promo Reel',
     client: 'Wise Talkies',
     category: 'Reels & Shorts',
@@ -152,7 +155,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'stalling-vehicle',
-    videoSrc: '/videos/stalling-vehicle.mp4',
+    driveFileId: '1IyTbHi9ojraw5m2LkNDj7M0o7OYWGa8j',
     title: 'Stalling Vehicle — Explainer Reel',
     client: 'Digital Campaign',
     category: 'Reels & Shorts',
@@ -166,7 +169,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'xmas-products',
-    videoSrc: '/videos/xmas-products.mp4',
+    driveFileId: '1C1SAMnb2GgcEwMiImmmfcDoyQLxobjsI',
     title: 'Festive Collection — Product Showcase Reel',
     client: 'Brand Creative',
     category: 'Reels & Shorts',
@@ -180,7 +183,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'xmas-prod-reels',
-    videoSrc: '/videos/xmas-prod-reels.mp4',
+    driveFileId: '16wijCM8qxOtGSkBejQe_Na9GEb1deV5G',
     title: 'Festive Brand Film — Holiday Master',
     client: 'Retail Campaign',
     category: 'Motion Graphics',
@@ -194,7 +197,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'xmas-offer',
-    videoSrc: '/videos/xmas-offer.mp4',
+    driveFileId: '1aoJGFWDxmp_iXdRuljFsJ8-dBy_0tqey',
     title: 'Holiday Offer — Motion Promo',
     client: 'Retail Campaign',
     category: 'Motion Graphics',
@@ -208,7 +211,7 @@ export const WORKS: WorkItem[] = [
   },
   {
     id: 'reels-xmas-p4',
-    videoSrc: '/videos/reels-xmas-p4.mp4',
+    driveFileId: '1NLshsyE_eyOjvUyEQbxe_QmQqC7NBBIB',
     title: 'Curated Gift Box — Product Spotlight Reel',
     client: 'Brand Creative',
     category: 'Reels & Shorts',
