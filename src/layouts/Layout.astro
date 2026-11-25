@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Dheeraj C — Content Delivery Manager & Senior Video Editor',
+  description = 'Portfolio of Dheeraj C — Content Delivery Manager & Senior Video Editor with 7+ years orchestrating post-production, DaVinci Resolve color grading, dynamic visual pacing, and release workflows across Kozhikode, India.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#2C3531" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <!-- Inline SVG Studio Favicon (#2C3531 / #116466 / #FFCB9A) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232C3531'/%3E%3Crect x='6' y='6' width='52' height='52' rx='10' fill='none' stroke='%23116466' stroke-width='2.5'/%3E%3Ccircle cx='18' cy='18' r='4.5' fill='%23FFCB9A'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia, serif' font-weight='700' font-size='22' fill='%23D1E8E2'%3EDC%3C/text%3E%3C/svg%3E"
+    />
+
+    <!-- Editorial Typography: Cinzel (Display) + Jost (Futura Geometric Webfont) + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Jost:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen antialiased bg-[#1E2522] text-[#D1E8E2] selection:bg-[#FFCB9A] selection:text-[#1E2522]">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-[#FFCB9A] focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:text-[#1E2522]"
+    >
+      Skip to main content
+    </a>
+
+    <slot />
+  </body>
+</html>

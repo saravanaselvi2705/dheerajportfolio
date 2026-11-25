@@ -1,0 +1,124 @@
+---
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#works', label: 'Works' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 inset-x-0 z-40 transition-all duration-300 px-3 sm:px-6 pt-3 sm:pt-4"
+>
+  <nav
+    aria-label="Primary navigation"
+    class="mx-auto max-w-6xl rounded-full border border-[#116466]/80 bg-[#2C3531]/82 backdrop-blur-md shadow-[0_12px_36px_rgba(0,0,0,0.45)] px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4 text-[#D1E8E2]"
+  >
+    <!-- Brand Mark -->
+    <a
+      href="#top"
+      class="flex items-center gap-2.5 group shrink-0"
+      aria-label="Dheeraj C — Back to top"
+    >
+      <span class="h-2 w-2 rounded-full bg-[#FFCB9A] shadow-[0_0_10px_rgba(255,203,154,0.75)]" aria-hidden="true"></span>
+      <span class="font-display text-sm sm:text-base font-bold tracking-[0.18em] uppercase text-[#D1E8E2] group-hover:text-[#FFCB9A] transition-colors">
+        DHEERAJ C
+      </span>
+    </a>
+
+    <!-- Desktop Anchors -->
+    <ul class="hidden lg:flex items-center gap-7 text-sm font-medium tracking-wide text-[#D1E8E2]/85">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="relative py-1 transition-colors hover:text-[#FFCB9A] after:absolute after:left-0 after:bottom-0 after:h-[1.5px] after:w-0 after:bg-[#FFCB9A] after:transition-all after:duration-200 hover:after:w-full"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Right CTAs & Mobile Menu Trigger -->
+    <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+      <a
+        href="#works"
+        class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#116466] bg-[#116466]/25 px-3.5 py-1.5 text-xs tracking-wider uppercase text-[#D1E8E2] hover:border-[#FFCB9A] hover:text-[#FFCB9A] transition-colors"
+      >
+        View Reel
+      </a>
+
+      <a
+        href="#contact"
+        class="inline-flex items-center gap-2 rounded-full bg-[#FFCB9A] hover:bg-[#D9B08C] px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#1E2522] shadow-[0_6px_22px_rgba(255,203,154,0.28)] transition-all hover:-translate-y-0.5"
+      >
+        Get in Touch
+      </a>
+
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav-drawer"
+        aria-label="Toggle navigation menu"
+        class="lg:hidden inline-flex items-center justify-center rounded-full border border-[#116466] p-2 text-[#D1E8E2] hover:bg-[#116466]/35 transition-colors"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div
+    id="mobile-nav-drawer"
+    hidden
+    class="lg:hidden mx-auto max-w-6xl mt-2 rounded-2xl border border-[#116466] bg-[#2C3531]/95 backdrop-blur-md p-4 text-[#D1E8E2] shadow-2xl"
+  >
+    <ul class="flex flex-col gap-1">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            data-mobile-link
+            class="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-[#D1E8E2] hover:bg-[#116466]/30 transition-colors"
+          >
+            <span>{link.label}</span>
+            <span class="text-[11px] tracking-wider text-[#FFCB9A]">JUMP &rarr;</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const drawer = document.getElementById('mobile-nav-drawer');
+
+  if (toggleBtn && drawer) {
+    const closeDrawer = () => {
+      drawer.hidden = true;
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    };
+
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = !drawer.hidden;
+      drawer.hidden = isOpen;
+      toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    drawer.querySelectorAll('[data-mobile-link]').forEach((link) => {
+      link.addEventListener('click', closeDrawer);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !drawer.hidden) {
+        closeDrawer();
+      }
+    });
+  }
+</script>

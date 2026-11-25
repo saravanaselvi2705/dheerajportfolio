@@ -1,0 +1,120 @@
+---
+import { HERO_VIDEO_STREAM_URL } from '../data/portfolio';
+---
+
+<section
+  id="top"
+  class="relative min-h-[88vh] flex items-center bg-[#1E2522] text-[#D1E8E2] overflow-hidden pt-28 sm:pt-32 pb-20 sm:pb-24 border-b border-[#116466]/50"
+>
+  <!-- Fallback Futuristic Obsidian / Deep Teal / Warm Amber Radial Glow -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 72% 56% at 74% 28%, rgba(17, 100, 102, 0.42), transparent 65%), radial-gradient(ellipse 52% 45% at 24% 76%, rgba(255, 203, 154, 0.14), transparent 62%), linear-gradient(180deg, #1E2522 0%, #2C3531 55%, #1E2522 100%);"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Faded Background Video: Screenwriting Series — Raghunath Paleri -->
+  <video
+    id="hero-ambient-video"
+    class="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none transition-opacity duration-700"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-hidden="true"
+  >
+    <source src={HERO_VIDEO_STREAM_URL} type="video/mp4" />
+  </video>
+
+  <!-- Futuristic Coordinate Grid & Vignette -->
+  <div class="absolute inset-0 futuristic-grid opacity-55" aria-hidden="true"></div>
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(circle at 38% 50%, rgba(30, 37, 34, 0.30) 0%, rgba(30, 37, 34, 0.88) 100%), linear-gradient(180deg, rgba(30, 37, 34, 0.68) 0%, rgba(30, 37, 34, 0.25) 50%, rgba(30, 37, 34, 0.96) 100%);"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-0 film-grain opacity-75" aria-hidden="true"></div>
+
+  <!-- Editorial Hero Content -->
+  <div class="relative z-10 mx-auto max-w-6xl w-full px-4 sm:px-6">
+    <div class="max-w-4xl">
+      <div class="inline-flex items-center gap-2.5 rounded-full border border-[#116466] bg-[#2C3531]/80 backdrop-blur-sm px-4 py-1.5 mb-7">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#FFCB9A]" aria-hidden="true"></span>
+        <span class="text-[11px] sm:text-xs uppercase tracking-[0.22em] text-[#FFCB9A] font-semibold">
+          Content Delivery Manager &amp; Senior Video Editor
+        </span>
+      </div>
+
+      <h1
+        class="font-display font-bold tracking-[0.015em] leading-[1.08] text-[#D1E8E2]"
+        style="font-size: clamp(2.3rem, 5.1vw, 4.3rem);"
+      >
+        Crafting High-Retention Visuals &amp; Seamless Delivery Pipelines.
+      </h1>
+
+      <p
+        class="mt-6 max-w-2xl text-[#D1E8E2]/80 leading-relaxed"
+        style="font-size: clamp(1.02rem, 1.45vw, 1.22rem);"
+      >
+        7+ years orchestrating post-production, DaVinci Resolve color grading, dynamic pacing,
+        and multi-channel release workflows across Kozhikode, India.
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a
+          href="#works"
+          class="inline-flex items-center gap-2.5 rounded-full bg-[#FFCB9A] hover:bg-[#D9B08C] px-7 py-3.5 text-sm font-semibold tracking-wide text-[#1E2522] shadow-[0_12px_32px_rgba(255,203,154,0.28)] transition-all hover:-translate-y-0.5"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          Explore Selected Cuts
+        </a>
+
+        <a
+          href="#contact"
+          class="inline-flex items-center gap-2 rounded-full border border-[#116466] hover:border-[#FFCB9A] bg-[#2C3531]/75 hover:bg-[#116466]/35 px-7 py-3.5 text-sm font-medium tracking-wide text-[#D1E8E2] transition-colors"
+        >
+          Start a Delivery Inquiry
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      <!-- Subtle Editorial Credibility Strip -->
+      <div class="mt-14 pt-6 border-t border-[#116466]/65 grid grid-cols-2 sm:grid-cols-3 gap-6 max-w-2xl">
+        <div>
+          <div class="font-display text-lg sm:text-xl font-bold text-[#FFCB9A]">7+ Years</div>
+          <div class="text-xs uppercase tracking-[0.14em] text-[#D1E8E2]/70 mt-1">Post-Production</div>
+        </div>
+        <div>
+          <div class="font-display text-lg sm:text-xl font-bold text-[#FFCB9A]">100+ Cuts</div>
+          <div class="text-xs uppercase tracking-[0.14em] text-[#D1E8E2]/70 mt-1">Trailers &amp; Reels</div>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <div class="font-display text-lg sm:text-xl font-bold text-[#D9B08C]">Kozhikode, IN</div>
+          <div class="text-xs uppercase tracking-[0.14em] text-[#D1E8E2]/70 mt-1">Worldwide Remote Ops</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ambientVideo = document.getElementById('hero-ambient-video') as HTMLVideoElement | null;
+
+  if (ambientVideo) {
+    if (reducedMotion) {
+      ambientVideo.pause();
+      ambientVideo.classList.add('hidden');
+    } else {
+      ambientVideo.addEventListener('error', () => {
+        ambientVideo.classList.add('hidden');
+      });
+      ambientVideo.play().catch(() => {
+        // Fallback handled smoothly by futuristic radial gradient backdrop
+      });
+    }
+  }
+</script>

@@ -1,0 +1,698 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { WORKS, WORK_CATEGORIES } from '../data/portfolio';
+import bgOptical from '../assets/bg-futuristic-optical.jpg';
+
+const thumbnailModules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/thumbnails/*.jpg',
+  { eager: true }
+);
+
+function getThumbnail(key: string): ImageMetadata {
+  const match = thumbnailModules[`../assets/thumbnails/${key}.jpg`];
+  if (!match) {
+    throw new Error(`Missing thumbnail asset for key: ${key}`);
+  }
+  return match.default;
+}
+---
+
+<section
+  id="works"
+  class="relative bg-[#1E2522] text-[#D1E8E2] py-20 sm:py-28 border-b border-[#116466]/55 overflow-hidden"
+>
+  <!-- Matching Futuristic Optical Lens Backdrop -->
+  <Image
+    src={bgOptical}
+    alt=""
+    widths={[768, 1376]}
+    sizes="100vw"
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover opacity-28 pointer-events-none select-none"
+    loading="lazy"
+  />
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 70% 55% at 80% 15%, rgba(17, 100, 102, 0.25), transparent 65%), linear-gradient(180deg, rgba(30, 37, 34, 0.86) 0%, rgba(30, 37, 34, 0.65) 50%, rgba(30, 37, 34, 0.92) 100%);"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-0 futuristic-grid opacity-40" aria-hidden="true"></div>
+
+  <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+    <!-- Section Header -->
+    <div class="flex flex-wrap items-end justify-between gap-6 border-b border-[#116466]/70 pb-6 mb-10">
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-[#FFCB9A] font-semibold mb-2">
+          02 // WORKS DONE
+        </p>
+        <h2
+          class="font-display font-bold tracking-[0.015em] leading-[1.1] text-[#D1E8E2]"
+          style="font-size: clamp(1.85rem, 3.6vw, 3rem);"
+        >
+          Curated Cuts, Trailers &amp; High-Retention Reels.
+        </h2>
+      </div>
+      <span class="text-xs uppercase tracking-[0.16em] text-[#D9B08C]">
+        TAP ANY CUT TO WATCH
+      </span>
+    </div>
+
+    <!-- Category Filter Chips -->
+    <div
+      class="flex flex-wrap items-center gap-2.5 mb-8"
+      role="tablist"
+      aria-label="Filter portfolio works by category"
+    >
+      {WORK_CATEGORIES.map((category, idx) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={idx === 0 ? 'true' : 'false'}
+          data-filter-btn={category}
+          class:list={[
+            'filter-chip rounded-full border px-4 py-1.5 text-xs sm:text-sm font-medium tracking-wide transition-all cursor-pointer',
+            idx === 0
+              ? 'border-[#FFCB9A] bg-[#FFCB9A] text-[#1E2522] font-semibold shadow-[0_6px_18px_rgba(255,203,154,0.28)]'
+              : 'border-[#116466] bg-[#2C3531]/75 text-[#D1E8E2]/85 hover:border-[#FFCB9A] hover:text-[#FFCB9A]',
+          ]}
+        >
+          {category}
+        </button>
+      ))}
+      <span
+        id="works-count-label"
+        class="ml-auto font-mono-tech text-[11px] uppercase tracking-[0.14em] text-[#D9B08C]"
+      >
+        SHOWING {WORKS.length} / {WORKS.length} CUTS
+      </span>
+    </div>
+
+    <!-- 16:9 Video Cards Grid -->
+    <div
+      id="works-grid"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      {WORKS.map((work) => {
+        const thumb = getThumbnail(work.thumbnailKey);
+        return (
+          <article
+            data-work-card
+            data-category={work.category}
+            class="work-card group rounded-2xl border border-[#116466]/80 hover:border-[#FFCB9A] bg-[#2C3531]/80 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col shadow-[0_14px_36px_rgba(0,0,0,0.34)]"
+          >
+            <!-- 16:9 Media Stage (Plays Directly on Click) -->
+            <button
+              type="button"
+              data-open-modal
+              data-video-src={work.videoSrc}
+              data-title={work.title}
+              data-client={work.client}
+              data-category={work.category}
+              data-duration={work.duration}
+              data-role={work.role}
+              data-summary={work.summary}
+              aria-label={`Play ${work.title} (${work.duration})`}
+              class="relative aspect-video w-full overflow-hidden bg-[#1E2522] text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCB9A]"
+            >
+              <Image
+                src={thumb}
+                alt={`${work.title} — ${work.category} frame`}
+                widths={[480, 768]}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+
+              <!-- Lazy Hover Preview Video Layer -->
+              <video
+                data-hover-video
+                data-src={work.videoSrc}
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-hidden="true"
+                class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 pointer-events-none"
+              />
+
+              <!-- Subtle Vignette -->
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-[#1E2522]/90 via-[#1E2522]/20 to-transparent pointer-events-none"
+                aria-hidden="true"
+              ></div>
+
+              <!-- Floating Category Tag -->
+              <span class="absolute top-3 left-3 rounded-full border border-[#116466] bg-[#1E2522]/85 backdrop-blur-sm px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-[#FFCB9A] font-semibold">
+                {work.category}
+              </span>
+
+              <!-- Floating Duration Badge -->
+              <span class="absolute top-3 right-3 rounded-md border border-[#116466] bg-[#1E2522]/85 backdrop-blur-sm px-2 py-0.5 font-mono-tech text-[11px] font-medium text-[#D1E8E2]">
+                {work.duration}
+              </span>
+
+              <!-- Center Play Button -->
+              <span
+                class="play-pill absolute inset-0 flex items-center justify-center pointer-events-none"
+                aria-hidden="true"
+              >
+                <span class="flex items-center justify-center w-12 h-12 rounded-full bg-[#FFCB9A]/92 border border-[#D1E8E2]/80 text-[#1E2522] shadow-[0_8px_24px_rgba(0,0,0,0.55)] transition-transform duration-300 group-hover:scale-110 group-hover:bg-[#FFCB9A]">
+                  <svg class="w-5 h-5 translate-x-0.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </span>
+              </span>
+
+              <!-- Bottom Format Note -->
+              <span class="absolute bottom-2.5 left-3 text-[10px] uppercase tracking-wider text-[#D1E8E2]/80">
+                {work.aspectNote}
+              </span>
+            </button>
+
+            <!-- Card Metadata Body -->
+            <div class="p-5 flex-1 flex flex-col justify-between gap-3">
+              <div>
+                <div class="flex items-center justify-between gap-2 text-[11px] uppercase tracking-wider text-[#D9B08C] mb-1.5">
+                  <span>{work.client}</span>
+                  <span class="font-mono-tech text-[#D1E8E2]/70">{work.year}</span>
+                </div>
+                <h3 class="font-display font-bold text-lg text-[#D1E8E2] leading-snug group-hover:text-[#FFCB9A] transition-colors">
+                  {work.title}
+                </h3>
+                <p class="mt-2 text-sm text-[#D1E8E2]/75 leading-relaxed line-clamp-2">
+                  {work.summary}
+                </p>
+              </div>
+
+              <div class="pt-3 border-t border-[#116466]/65 flex items-center justify-between gap-2">
+                <span class="text-xs text-[#D1E8E2]/75 truncate">
+                  {work.role}
+                </span>
+                <span class="text-xs uppercase tracking-wider font-semibold text-[#FFCB9A] shrink-0">
+                  Play &rarr;
+                </span>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+
+  <!-- Accessible Native Video Modal with Flex Height Fit (Never Clips Bottom Controls) -->
+  <dialog
+    id="work-preview-dialog"
+    aria-labelledby="modal-work-title"
+    class="m-auto w-[min(94vw,920px)] max-h-[92vh] rounded-2xl border border-[#116466] bg-[#1E2522] text-[#D1E8E2] p-0 shadow-[0_32px_90px_rgba(0,0,0,0.88)] backdrop:bg-[#1E2522]/88 backdrop:backdrop-blur-md overflow-hidden open:flex open:flex-col"
+  >
+    <!-- Modal Header -->
+    <div class="shrink-0 flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b border-[#116466]/70 bg-[#2C3531]">
+      <div class="min-w-0">
+        <div class="flex items-center gap-2 text-[11px] uppercase tracking-wider text-[#FFCB9A] font-semibold">
+          <span id="modal-work-category">Category</span>
+          <span>&bull;</span>
+          <span id="modal-work-duration" class="font-mono-tech text-[#D1E8E2]">00:00</span>
+          <span>&bull;</span>
+          <span id="modal-work-client" class="text-[#D9B08C]">Client</span>
+        </div>
+        <h3 id="modal-work-title" class="font-display font-bold text-base sm:text-lg text-[#D1E8E2] truncate mt-0.5">
+          Video Preview
+        </h3>
+      </div>
+
+      <button
+        id="modal-close-btn"
+        type="button"
+        aria-label="Close video modal"
+        class="shrink-0 rounded-full bg-[#FFCB9A] hover:bg-[#D9B08C] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#1E2522] transition-colors cursor-pointer"
+      >
+        Close [ESC]
+      </button>
+    </div>
+
+    <!-- Custom Interactive Video Player Stage (Viewport-safe height so bottom controls are always 100% visible) -->
+    <div
+      id="modal-player-shell"
+      class="relative w-full h-[min(64vh,520px)] bg-black flex items-center justify-center overflow-hidden select-none"
+    >
+      <video
+        id="modal-video-player"
+        playsinline
+        preload="metadata"
+        class="w-full h-full object-contain bg-black cursor-pointer"
+      ></video>
+
+      <!-- Tap-to-Reveal Center Play/Pause Overlay Indicator -->
+      <button
+        id="modal-center-play"
+        type="button"
+        aria-label="Toggle video playback"
+        class="absolute inset-0 flex items-center justify-center bg-transparent cursor-pointer focus:outline-none"
+      >
+        <span
+          id="modal-center-badge"
+          class="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#2C3531]/85 border border-[#FFCB9A] text-[#FFCB9A] shadow-[0_10px_30px_rgba(0,0,0,0.65)] transition-all duration-200 opacity-0 scale-90"
+        >
+          <svg id="modal-center-play-icon" class="w-6 h-6 sm:w-7 sm:h-7 translate-x-0.5 fill-current" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </button>
+
+      <!-- Bottom Scrubber Timeline Bar (Never clipped; fits comfortably inside player shell) -->
+      <div
+        id="modal-scrubber-bar"
+        class="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-[#1E2522] via-[#1E2522]/90 to-transparent px-4 sm:px-6 pt-8 pb-3.5 transition-opacity duration-250 opacity-100"
+      >
+        <!-- Scrubber Track + Draggable Progress Dot -->
+        <div
+          id="modal-scrub-track"
+          role="slider"
+          tabindex="0"
+          aria-label="Video playback timeline scrubber"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          class="relative h-6 flex items-center cursor-pointer group/scrub"
+          style="touch-action: none;"
+        >
+          <div class="relative w-full h-1.5 group-hover/scrub:h-2 transition-all rounded-full bg-[#D1E8E2]/25 overflow-hidden">
+            <div
+              id="modal-scrub-buffered"
+              class="absolute inset-y-0 left-0 bg-[#116466]/85 rounded-full"
+              style="width: 0%;"
+            ></div>
+            <div
+              id="modal-scrub-fill"
+              class="absolute inset-y-0 left-0 bg-[#FFCB9A] rounded-full"
+              style="width: 0%;"
+            ></div>
+          </div>
+
+          <div
+            id="modal-scrub-dot"
+            class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#FFCB9A] border-2 border-[#1E2522] shadow-[0_0_12px_rgba(255,203,154,0.95)] transition-transform duration-100 pointer-events-none"
+            style="left: 0%;"
+          ></div>
+        </div>
+
+        <!-- Transport Controls Row -->
+        <div class="mt-2 flex items-center justify-between gap-3 text-xs text-[#D1E8E2]">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <button
+              id="modal-play-toggle"
+              type="button"
+              aria-label="Play or pause video"
+              class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-[#116466] bg-[#2C3531]/95 hover:border-[#FFCB9A] text-[#FFCB9A] transition-colors cursor-pointer shrink-0"
+            >
+              <svg id="modal-play-icon" class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <svg id="modal-pause-icon" class="w-3.5 h-3.5 fill-current hidden" viewBox="0 0 24 24">
+                <path d="M6 5h4v14H6zm8 0h4v14h-4z" />
+              </svg>
+            </button>
+
+            <button
+              id="modal-mute-toggle"
+              type="button"
+              aria-label="Mute or unmute audio"
+              class="inline-flex items-center justify-center rounded-full border border-[#116466] bg-[#2C3531]/95 hover:border-[#FFCB9A] px-3 py-1 font-mono-tech text-[10px] uppercase tracking-wider text-[#D1E8E2] transition-colors cursor-pointer shrink-0"
+            >
+              SOUND ON
+            </button>
+
+            <span id="modal-time-readout" class="font-mono-tech text-[11px] sm:text-xs text-[#D1E8E2] whitespace-nowrap">
+              00:00 / 00:00
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="hidden sm:inline font-mono-tech text-[10px] uppercase tracking-wider text-[#D9B08C]/90">
+              Drag dot to scrub
+            </span>
+            <button
+              id="modal-fullscreen-btn"
+              type="button"
+              aria-label="Toggle fullscreen"
+              class="rounded-full border border-[#116466] bg-[#2C3531]/95 hover:border-[#FFCB9A] px-3 py-1 font-mono-tech text-[10px] uppercase tracking-wider text-[#D1E8E2] transition-colors cursor-pointer shrink-0"
+            >
+              Fullscreen
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Summary Footer -->
+    <div class="shrink-0 px-4 sm:px-6 py-3 border-t border-[#116466]/65 bg-[#2C3531]/95 flex flex-wrap items-center justify-between gap-2 text-xs text-[#D1E8E2]/80">
+      <p id="modal-work-summary" class="max-w-2xl"></p>
+      <span id="modal-work-role" class="text-[11px] text-[#FFCB9A] font-medium"></span>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter-btn]');
+  const workCards = document.querySelectorAll<HTMLElement>('[data-work-card]');
+  const countLabel = document.getElementById('works-count-label');
+
+  // Category Filtering
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const selected = btn.dataset.filterBtn || 'All';
+
+      filterButtons.forEach((b) => {
+        const active = b === btn;
+        b.setAttribute('aria-selected', String(active));
+        b.classList.toggle('border-[#FFCB9A]', active);
+        b.classList.toggle('bg-[#FFCB9A]', active);
+        b.classList.toggle('text-[#1E2522]', active);
+        b.classList.toggle('font-semibold', active);
+        b.classList.toggle('shadow-[0_6px_18px_rgba(255,203,154,0.28)]', active);
+
+        b.classList.toggle('border-[#116466]', !active);
+        b.classList.toggle('bg-[#2C3531]/75', !active);
+        b.classList.toggle('text-[#D1E8E2]/85', !active);
+      });
+
+      let visibleCount = 0;
+      workCards.forEach((card) => {
+        const matches = selected === 'All' || card.dataset.category === selected;
+        card.classList.toggle('hidden', !matches);
+        if (matches) visibleCount += 1;
+      });
+
+      if (countLabel) {
+        countLabel.textContent = `SHOWING ${visibleCount} / ${workCards.length} CUTS`;
+      }
+    });
+  });
+
+  // Hover Video Previews (plays local MP4 cleanly on pointerenter)
+  if (!reducedMotion) {
+    workCards.forEach((card) => {
+      const video = card.querySelector<HTMLVideoElement>('[data-hover-video]');
+      if (!video) return;
+
+      let failed = false;
+      video.addEventListener('error', () => {
+        failed = true;
+        video.classList.remove('opacity-100');
+        video.classList.add('opacity-0');
+      });
+
+      card.addEventListener('pointerenter', (e) => {
+        if (e.pointerType !== 'mouse' || failed) return;
+        if (!video.src && video.dataset.src) {
+          video.src = video.dataset.src;
+        }
+        video.play().then(() => {
+          if (!failed) {
+            video.classList.remove('opacity-0');
+            video.classList.add('opacity-100');
+          }
+        }).catch(() => {});
+      });
+
+      card.addEventListener('pointerleave', () => {
+        video.pause();
+        video.classList.remove('opacity-100');
+        video.classList.add('opacity-0');
+      });
+    });
+  }
+
+  // Custom Modal Video Player + Tap-to-Reveal Scrubber Bar
+  const dialog = document.getElementById('work-preview-dialog') as HTMLDialogElement | null;
+  const videoPlayer = document.getElementById('modal-video-player') as HTMLVideoElement | null;
+  const closeBtn = document.getElementById('modal-close-btn');
+  const fullscreenBtn = document.getElementById('modal-fullscreen-btn');
+  const playerShell = document.getElementById('modal-player-shell');
+  const scrubberBar = document.getElementById('modal-scrubber-bar');
+  const scrubTrack = document.getElementById('modal-scrub-track');
+  const scrubFill = document.getElementById('modal-scrub-fill');
+  const scrubBuffered = document.getElementById('modal-scrub-buffered');
+  const scrubDot = document.getElementById('modal-scrub-dot');
+  const centerPlayBtn = document.getElementById('modal-center-play');
+  const centerBadge = document.getElementById('modal-center-badge');
+  const playToggleBtn = document.getElementById('modal-play-toggle');
+  const playIcon = document.getElementById('modal-play-icon');
+  const pauseIcon = document.getElementById('modal-pause-icon');
+  const muteToggleBtn = document.getElementById('modal-mute-toggle');
+  const timeReadout = document.getElementById('modal-time-readout');
+
+  const modalTitle = document.getElementById('modal-work-title');
+  const modalCategory = document.getElementById('modal-work-category');
+  const modalDuration = document.getElementById('modal-work-duration');
+  const modalClient = document.getElementById('modal-work-client');
+  const modalSummary = document.getElementById('modal-work-summary');
+  const modalRole = document.getElementById('modal-work-role');
+
+  let isScrubbing = false;
+  let hideBarTimer: number | undefined;
+  let barVisible = true;
+
+  function formatSec(sec: number): string {
+    if (!Number.isFinite(sec) || sec < 0) return '00:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function setBarVisibility(visible: boolean) {
+    barVisible = visible;
+    if (!scrubberBar) return;
+    scrubberBar.classList.toggle('opacity-100', visible);
+    scrubberBar.classList.toggle('opacity-0', !visible);
+    scrubberBar.classList.toggle('pointer-events-none', !visible);
+  }
+
+  function scheduleHideBar() {
+    window.clearTimeout(hideBarTimer);
+    setBarVisibility(true);
+    if (videoPlayer && !videoPlayer.paused && !isScrubbing) {
+      hideBarTimer = window.setTimeout(() => {
+        if (videoPlayer && !videoPlayer.paused && !isScrubbing) {
+          setBarVisibility(false);
+        }
+      }, 3200);
+    }
+  }
+
+  function syncPlayUI() {
+    if (!videoPlayer) return;
+    const paused = videoPlayer.paused;
+    playIcon?.classList.toggle('hidden', !paused);
+    pauseIcon?.classList.toggle('hidden', paused);
+    if (centerBadge) {
+      centerBadge.classList.toggle('opacity-100', paused);
+      centerBadge.classList.toggle('scale-100', paused);
+      centerBadge.classList.toggle('opacity-0', !paused);
+      centerBadge.classList.toggle('scale-90', !paused);
+    }
+    if (paused) {
+      window.clearTimeout(hideBarTimer);
+      setBarVisibility(true);
+    } else {
+      scheduleHideBar();
+    }
+  }
+
+  function syncProgressUI() {
+    if (!videoPlayer) return;
+    const dur = videoPlayer.duration || 0;
+    const cur = videoPlayer.currentTime || 0;
+    const pct = dur > 0 ? Math.max(0, Math.min(100, (cur / dur) * 100)) : 0;
+
+    if (scrubFill) scrubFill.style.width = `${pct}%`;
+    if (scrubDot) scrubDot.style.left = `${pct}%`;
+    if (scrubTrack) scrubTrack.setAttribute('aria-valuenow', String(Math.round(pct)));
+    if (timeReadout) timeReadout.textContent = `${formatSec(cur)} / ${formatSec(dur)}`;
+
+    if (scrubBuffered && dur > 0 && videoPlayer.buffered.length > 0) {
+      const bufEnd = videoPlayer.buffered.end(videoPlayer.buffered.length - 1);
+      scrubBuffered.style.width = `${Math.min(100, (bufEnd / dur) * 100)}%`;
+    }
+  }
+
+  function scrubToClientX(clientX: number) {
+    if (!scrubTrack || !videoPlayer) return;
+    const rect = scrubTrack.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    if (Number.isFinite(videoPlayer.duration) && videoPlayer.duration > 0) {
+      videoPlayer.currentTime = pct * videoPlayer.duration;
+    }
+    syncProgressUI();
+  }
+
+  function togglePlayback() {
+    if (!videoPlayer) return;
+    if (videoPlayer.paused) {
+      videoPlayer.play().catch(() => {});
+    } else {
+      videoPlayer.pause();
+    }
+  }
+
+  function resetPlayer() {
+    window.clearTimeout(hideBarTimer);
+    if (videoPlayer) {
+      videoPlayer.pause();
+      videoPlayer.removeAttribute('src');
+      videoPlayer.load();
+    }
+    if (scrubFill) scrubFill.style.width = '0%';
+    if (scrubBuffered) scrubBuffered.style.width = '0%';
+    if (scrubDot) scrubDot.style.left = '0%';
+    if (timeReadout) timeReadout.textContent = '00:00 / 00:00';
+    setBarVisibility(true);
+  }
+
+  function closeModal() {
+    if (!dialog) return;
+    resetPlayer();
+    if (dialog.open) dialog.close();
+  }
+
+  if (videoPlayer) {
+    videoPlayer.addEventListener('timeupdate', () => {
+      if (!isScrubbing) syncProgressUI();
+    });
+    videoPlayer.addEventListener('loadedmetadata', syncProgressUI);
+    videoPlayer.addEventListener('progress', syncProgressUI);
+    videoPlayer.addEventListener('play', syncPlayUI);
+    videoPlayer.addEventListener('pause', syncPlayUI);
+    videoPlayer.addEventListener('ended', syncPlayUI);
+  }
+
+  if (centerPlayBtn) {
+    centerPlayBtn.addEventListener('click', () => {
+      if (!barVisible) {
+        scheduleHideBar();
+      } else {
+        togglePlayback();
+        scheduleHideBar();
+      }
+    });
+  }
+
+  if (playerShell) {
+    playerShell.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'mouse') {
+        scheduleHideBar();
+      }
+    });
+  }
+
+  if (playToggleBtn) {
+    playToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      togglePlayback();
+    });
+  }
+
+  if (muteToggleBtn && videoPlayer) {
+    muteToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      videoPlayer.muted = !videoPlayer.muted;
+      muteToggleBtn.textContent = videoPlayer.muted ? 'MUTED' : 'SOUND ON';
+    });
+  }
+
+  if (scrubTrack) {
+    scrubTrack.addEventListener('pointerdown', (e) => {
+      e.stopPropagation();
+      isScrubbing = true;
+      window.clearTimeout(hideBarTimer);
+      setBarVisibility(true);
+      scrubDot?.classList.add('scale-125');
+      scrubTrack.setPointerCapture(e.pointerId);
+      scrubToClientX(e.clientX);
+    });
+
+    scrubTrack.addEventListener('pointermove', (e) => {
+      if (!isScrubbing) return;
+      scrubToClientX(e.clientX);
+    });
+
+    const endScrub = (e: PointerEvent) => {
+      if (!isScrubbing) return;
+      isScrubbing = false;
+      scrubDot?.classList.remove('scale-125');
+      if (scrubTrack.hasPointerCapture(e.pointerId)) {
+        scrubTrack.releasePointerCapture(e.pointerId);
+      }
+      scheduleHideBar();
+    };
+
+    scrubTrack.addEventListener('pointerup', endScrub);
+    scrubTrack.addEventListener('pointercancel', endScrub);
+
+    scrubTrack.addEventListener('keydown', (e) => {
+      if (!videoPlayer || !Number.isFinite(videoPlayer.duration)) return;
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        videoPlayer.currentTime = Math.min(videoPlayer.duration, videoPlayer.currentTime + 5);
+        scheduleHideBar();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        videoPlayer.currentTime = Math.max(0, videoPlayer.currentTime - 5);
+        scheduleHideBar();
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        togglePlayback();
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-open-modal]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      if (!dialog || !videoPlayer) return;
+      const videoSrc = trigger.dataset.videoSrc || '';
+
+      if (modalTitle) modalTitle.textContent = trigger.dataset.title || '';
+      if (modalCategory) modalCategory.textContent = trigger.dataset.category || '';
+      if (modalDuration) modalDuration.textContent = trigger.dataset.duration || '';
+      if (modalClient) modalClient.textContent = trigger.dataset.client || '';
+      if (modalSummary) modalSummary.textContent = trigger.dataset.summary || '';
+      if (modalRole) modalRole.textContent = trigger.dataset.role || '';
+
+      resetPlayer();
+      videoPlayer.muted = false;
+      if (muteToggleBtn) muteToggleBtn.textContent = 'SOUND ON';
+      videoPlayer.src = videoSrc;
+      dialog.showModal();
+      syncPlayUI();
+      videoPlayer.play().catch(() => {
+        syncPlayUI();
+      });
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+
+  if (dialog) {
+    dialog.addEventListener('close', resetPlayer);
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        closeModal();
+      }
+    });
+  }
+
+  if (fullscreenBtn && playerShell) {
+    fullscreenBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      } else {
+        playerShell.requestFullscreen?.().catch(() => {});
+      }
+    });
+  }
+</script>

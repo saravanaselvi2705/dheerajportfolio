@@ -1,0 +1,74 @@
+---
+import { CONTACT_INFO } from '../data/portfolio';
+
+const channels = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/search/results/all/?keywords=Dheeraj%20C%20Video%20Editor' },
+  { label: 'YouTube', href: 'https://www.youtube.com' },
+  { label: 'Instagram', href: 'https://www.instagram.com' },
+  { label: 'Email', href: `mailto:${CONTACT_INFO.email}` },
+];
+---
+
+<footer class="relative bg-[#1E2522] text-[#D1E8E2] py-12 sm:py-14 overflow-hidden">
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 65% 80% at 50% 100%, rgba(17, 100, 102, 0.22), transparent 70%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-[#116466]/60 pb-8">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="font-display text-sm font-bold tracking-[0.18em] uppercase text-[#D1E8E2]">
+            DHEERAJ C
+          </span>
+          <span class="text-xs text-[#FFCB9A] uppercase tracking-wider">
+            // CONTENT DELIVERY &amp; POST-PRODUCTION
+          </span>
+        </div>
+        <p class="mt-2 text-xs text-[#D1E8E2]/75">
+          {CONTACT_INFO.shortLocation}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+        <ul class="flex flex-wrap items-center gap-4 sm:gap-5 text-xs uppercase tracking-wider text-[#D1E8E2]/75">
+          {channels.map((ch) => (
+            <li>
+              <a
+                href={ch.href}
+                target={ch.href.startsWith('http') ? '_blank' : undefined}
+                rel={ch.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                class="hover:text-[#FFCB9A] transition-colors"
+              >
+                {ch.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="#top"
+          aria-label="Back to top"
+          class="inline-flex items-center gap-1.5 rounded-full border border-[#116466] hover:border-[#FFCB9A] hover:bg-[#FFCB9A] hover:text-[#1E2522] px-3.5 py-1.5 text-xs uppercase tracking-wider text-[#D1E8E2] transition-colors"
+        >
+          <span>Top</span>
+          <span aria-hidden="true">&uarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-[#D1E8E2]/70">
+      <p>&copy; 2026 Dheeraj C. All rights reserved. Designed for high-retention storytelling.</p>
+      <a
+        href="https://creovix-website.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[11px] uppercase tracking-wider text-[#D9B08C] hover:text-[#FFCB9A] transition-colors"
+      >
+        Powered by <span class="font-semibold text-[#FFCB9A]">CreovixStack</span>
+      </a>
+    </div>
+  </div>
+</footer>

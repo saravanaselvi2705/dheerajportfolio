@@ -1,0 +1,258 @@
+---
+import { Image } from 'astro:assets';
+import { CONTACT_INFO } from '../data/portfolio';
+import bgOptical from '../assets/bg-futuristic-optical.jpg';
+
+const whatsappDirectUrl = `https://wa.me/${CONTACT_INFO.whatsappNumber}`;
+---
+
+<section
+  id="contact"
+  class="relative bg-[#1E2522] text-[#D1E8E2] py-20 sm:py-28 border-b border-[#116466]/55 overflow-hidden"
+>
+  <!-- Matching Futuristic Optical Backdrop -->
+  <Image
+    src={bgOptical}
+    alt=""
+    widths={[768, 1376]}
+    sizes="100vw"
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover opacity-30 -scale-y-100 pointer-events-none select-none"
+    loading="lazy"
+  />
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 65% 60% at 20% 80%, rgba(17, 100, 102, 0.30), transparent 65%), linear-gradient(180deg, rgba(30, 37, 34, 0.85) 0%, rgba(30, 37, 34, 0.65) 50%, rgba(30, 37, 34, 0.94) 100%);"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-0 futuristic-grid opacity-40" aria-hidden="true"></div>
+
+  <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+    <!-- Section Header -->
+    <div class="flex flex-wrap items-end justify-between gap-4 border-b border-[#116466]/70 pb-6 mb-12">
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-[#FFCB9A] font-semibold mb-2">
+          04 // CONTACT &amp; INQUIRIES
+        </p>
+        <h2
+          class="font-display font-bold tracking-[0.015em] leading-[1.1] text-[#D1E8E2]"
+          style="font-size: clamp(1.85rem, 3.6vw, 3rem);"
+        >
+          Let’s Build Your Next High-Impact Cut.
+        </h2>
+      </div>
+      <span class="text-xs uppercase tracking-[0.16em] text-[#D9B08C]">
+        WHATSAPP DISPATCH // KOZHIKODE
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <!-- Left: Direct Contact Badges -->
+      <div class="lg:col-span-5 space-y-5">
+        <p class="text-[#D1E8E2]/80 leading-relaxed text-base">
+          Need a reliable Senior Video Editor for high-retention reels, masterclasses, and color
+          finishing—or a Content Delivery Manager to tighten your channel’s publishing pipeline?
+          Submit your brief and continue directly on WhatsApp.
+        </p>
+
+        <div class="space-y-3 pt-2">
+          <a
+            href={whatsappDirectUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-between gap-3 rounded-2xl border border-[#FFCB9A]/65 bg-[#2C3531]/85 backdrop-blur-sm hover:bg-[#FFCB9A] hover:text-[#1E2522] px-5 py-4 transition-colors group"
+          >
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.18em] text-[#FFCB9A] group-hover:text-[#1E2522] font-semibold">
+                WhatsApp Direct
+              </div>
+              <div class="font-mono-tech font-semibold text-sm sm:text-base text-[#D1E8E2] group-hover:text-[#1E2522] transition-colors mt-0.5">
+                {CONTACT_INFO.phone}
+              </div>
+            </div>
+            <span class="text-sm text-[#FFCB9A] group-hover:text-[#1E2522] shrink-0">&rarr;</span>
+          </a>
+
+          <a
+            href={`mailto:${CONTACT_INFO.email}`}
+            class="flex items-center justify-between gap-3 rounded-2xl border border-[#116466] bg-[#2C3531]/80 backdrop-blur-sm hover:border-[#FFCB9A] px-5 py-4 transition-colors group"
+          >
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.18em] text-[#FFCB9A] font-semibold">
+                Email Dispatch
+              </div>
+              <div class="font-medium text-sm sm:text-base text-[#D1E8E2] group-hover:text-[#FFCB9A] transition-colors break-all mt-0.5">
+                {CONTACT_INFO.email}
+              </div>
+            </div>
+            <span class="text-sm text-[#FFCB9A] shrink-0">&rarr;</span>
+          </a>
+
+          <div class="rounded-2xl border border-[#116466] bg-[#2C3531]/80 backdrop-blur-sm px-5 py-4">
+            <div class="text-[10px] uppercase tracking-[0.18em] text-[#FFCB9A] font-semibold">
+              Studio Location
+            </div>
+            <div class="font-medium text-sm sm:text-base text-[#D1E8E2] mt-0.5">
+              {CONTACT_INFO.shortLocation}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: WhatsApp-Connected Project Inquiry Form -->
+      <div class="lg:col-span-7">
+        <form
+          id="project-inquiry-form"
+          data-whatsapp-number={CONTACT_INFO.whatsappNumber}
+          class="rounded-2xl border border-[#116466] bg-[#2C3531]/85 backdrop-blur-md p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.38)] space-y-5"
+          novalidate
+        >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="inquiry-name" class="block text-xs uppercase tracking-wider text-[#D9B08C] font-medium mb-2">
+                Your Name *
+              </label>
+              <input
+                id="inquiry-name"
+                name="name"
+                type="text"
+                required
+                placeholder="e.g. Arjun Menon"
+                class="w-full rounded-xl border border-[#116466] bg-[#1E2522]/85 px-4 py-3 text-sm text-[#D1E8E2] placeholder:text-[#D1E8E2]/45 focus:border-[#FFCB9A] focus:outline-none focus:ring-2 focus:ring-[#FFCB9A]/30 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label for="inquiry-email" class="block text-xs uppercase tracking-wider text-[#D9B08C] font-medium mb-2">
+                Email Address *
+              </label>
+              <input
+                id="inquiry-email"
+                name="email"
+                type="email"
+                required
+                placeholder="you@studio.com"
+                class="w-full rounded-xl border border-[#116466] bg-[#1E2522]/85 px-4 py-3 text-sm text-[#D1E8E2] placeholder:text-[#D1E8E2]/45 focus:border-[#FFCB9A] focus:outline-none focus:ring-2 focus:ring-[#FFCB9A]/30 transition-colors"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="inquiry-type" class="block text-xs uppercase tracking-wider text-[#D9B08C] font-medium mb-2">
+                Project Type
+              </label>
+              <select
+                id="inquiry-type"
+                name="projectType"
+                class="w-full rounded-xl border border-[#116466] bg-[#1E2522]/85 px-4 py-3 text-sm text-[#D1E8E2] focus:border-[#FFCB9A] focus:outline-none focus:ring-2 focus:ring-[#FFCB9A]/30 transition-colors"
+              >
+                <option value="Full Post-Production">Full Post-Production</option>
+                <option value="Reels / Social Ad Package">Reels / Social Ad Package</option>
+                <option value="Content Delivery Management">Content Delivery Management</option>
+                <option value="Color Grading / Motion">Color Grading / Motion</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="inquiry-timeline" class="block text-xs uppercase tracking-wider text-[#D9B08C] font-medium mb-2">
+                Target Timeline
+              </label>
+              <input
+                id="inquiry-timeline"
+                name="timeline"
+                type="text"
+                placeholder="e.g. 2 weeks / Monthly retainer"
+                class="w-full rounded-xl border border-[#116466] bg-[#1E2522]/85 px-4 py-3 text-sm text-[#D1E8E2] placeholder:text-[#D1E8E2]/45 focus:border-[#FFCB9A] focus:outline-none focus:ring-2 focus:ring-[#FFCB9A]/30 transition-colors"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="inquiry-brief" class="block text-xs uppercase tracking-wider text-[#D9B08C] font-medium mb-2">
+              Project Description / Reference Link *
+            </label>
+            <textarea
+              id="inquiry-brief"
+              name="brief"
+              rows="4"
+              required
+              placeholder="Share deliverables, aspect ratios (16:9 / 9:16), or reference cut details..."
+              class="w-full rounded-xl border border-[#116466] bg-[#1E2522]/85 px-4 py-3 text-sm text-[#D1E8E2] placeholder:text-[#D1E8E2]/45 focus:border-[#FFCB9A] focus:outline-none focus:ring-2 focus:ring-[#FFCB9A]/30 transition-colors resize-y"
+            ></textarea>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-4 pt-1">
+            <button
+              type="submit"
+              class="inline-flex items-center gap-2.5 rounded-full bg-[#FFCB9A] hover:bg-[#D9B08C] px-7 py-3.5 text-sm font-semibold text-[#1E2522] shadow-[0_10px_26px_rgba(255,203,154,0.28)] transition-all hover:-translate-y-0.5 cursor-pointer"
+            >
+              <span>Send Inquiry via WhatsApp</span>
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+
+            <span class="text-xs uppercase tracking-wider text-[#D9B08C]">
+              INSTANT WHATSAPP REDIRECT
+            </span>
+          </div>
+
+          <div
+            id="inquiry-feedback"
+            role="status"
+            aria-live="polite"
+            class="hidden rounded-xl border border-[#FFCB9A]/60 bg-[#1E2522] px-4 py-3 text-xs sm:text-sm text-[#D1E8E2]"
+          ></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('project-inquiry-form') as HTMLFormElement | null;
+  const feedback = document.getElementById('inquiry-feedback');
+
+  if (form && feedback) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const projectType = String(data.get('projectType') || 'Full Post-Production').trim();
+      const timeline = String(data.get('timeline') || 'Flexible').trim();
+      const brief = String(data.get('brief') || '').trim();
+      const phone = form.dataset.whatsappNumber || '919539794989';
+
+      if (!name || !email || !brief) {
+        feedback.textContent = 'Please complete your Name, Email, and Project Description before continuing to WhatsApp.';
+        feedback.classList.remove('hidden');
+        return;
+      }
+
+      const message = [
+        `*New Portfolio Inquiry for Dheeraj C*`,
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Project Type: ${projectType}`,
+        `Timeline: ${timeline}`,
+        `Project Brief: ${brief}`,
+      ].join('\n');
+
+      const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+      feedback.innerHTML = '';
+      const msgSpan = document.createElement('span');
+      msgSpan.textContent = 'Redirecting to WhatsApp with your inquiry details... ';
+      const link = document.createElement('a');
+      link.href = whatsappUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'underline text-[#FFCB9A] font-semibold';
+      link.textContent = 'Open WhatsApp now';
+      feedback.append(msgSpan, link);
+      feedback.classList.remove('hidden');
+
+      window.location.href = whatsappUrl;
+    });
+  }
+</script>

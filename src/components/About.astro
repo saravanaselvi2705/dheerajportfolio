@@ -1,0 +1,116 @@
+---
+import { Image } from 'astro:assets';
+import { ABOUT_STATS, TOOLKIT_SKILLS, CONTACT_INFO } from '../data/portfolio';
+import bgPrism from '../assets/bg-futuristic-prism.jpg';
+---
+
+<section
+  id="about"
+  class="relative bg-[#2C3531] text-[#D1E8E2] py-20 sm:py-28 border-b border-[#116466]/55 overflow-hidden"
+>
+  <!-- Matching Futuristic Geometric Prism Backdrop -->
+  <Image
+    src={bgPrism}
+    alt=""
+    widths={[768, 1376]}
+    sizes="100vw"
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none select-none"
+    loading="lazy"
+  />
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 75% 65% at 22% 30%, rgba(17, 100, 102, 0.25), transparent 65%), linear-gradient(180deg, rgba(30, 37, 34, 0.78) 0%, rgba(44, 53, 49, 0.55) 50%, rgba(30, 37, 34, 0.85) 100%);"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-0 film-grain opacity-60" aria-hidden="true"></div>
+
+  <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+    <!-- Section Header -->
+    <div class="flex flex-wrap items-end justify-between gap-4 border-b border-[#116466]/70 pb-6 mb-12">
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-[#FFCB9A] font-semibold mb-2">
+          01 // ABOUT &amp; PHILOSOPHY
+        </p>
+        <h2
+          class="font-display font-bold tracking-[0.015em] leading-[1.1] text-[#D1E8E2]"
+          style="font-size: clamp(1.85rem, 3.6vw, 3rem);"
+        >
+          The Synergy of Creative Cut &amp; Pipeline Precision.
+        </h2>
+      </div>
+      <span class="text-xs uppercase tracking-[0.16em] text-[#D9B08C]">
+        EDIT SUITE &bull; RELEASE OPS
+      </span>
+    </div>
+
+    <!-- Main Editorial Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <!-- Left Column: Narrative & Stats -->
+      <div class="lg:col-span-7 space-y-6">
+        <p
+          class="text-[#D1E8E2] leading-relaxed font-medium"
+          style="font-size: clamp(1.05rem, 1.45vw, 1.25rem);"
+        >
+          Great storytelling collapses if the delivery pipeline stalls. Over 7+ years across
+          editorial suites and production teams, I have bridged both halves of modern digital media:
+          the tactile rhythm of the cut and the operational discipline required to ship on schedule.
+        </p>
+
+        <p class="text-[#D1E8E2]/78 leading-relaxed text-base">
+          In the NLE chair, my focus is frame-accurate visual pacing, narrative retention hooks,
+          DaVinci Resolve color grading, sound dubbing, and audio sweetening. As a Content Delivery
+          Manager, I align editors, creators, and producers around strict publishing calendars, QC
+          standards, digital asset hygiene, and platform metadata strategies that maximize organic reach.
+        </p>
+
+        <!-- Minimal Border Stat Callouts -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3">
+          {ABOUT_STATS.map((stat) => (
+            <div class="rounded-2xl border border-[#116466] bg-[#1E2522]/75 backdrop-blur-sm p-5 transition-colors hover:border-[#FFCB9A]">
+              <div class="font-display font-bold text-2xl sm:text-3xl text-[#FFCB9A] tracking-tight">
+                {stat.value}
+              </div>
+              <div class="mt-1.5 text-[11px] uppercase tracking-[0.14em] text-[#D1E8E2]/80 leading-snug">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right Column: Core Toolkit Cloud & Studio Slate Card -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="rounded-2xl border border-[#116466] bg-[#1E2522]/85 backdrop-blur-md text-[#D1E8E2] p-6 sm:p-7 shadow-[0_20px_48px_rgba(0,0,0,0.4)]">
+          <div class="flex items-center justify-between border-b border-[#116466]/70 pb-3.5 mb-5">
+            <span class="text-xs uppercase tracking-[0.18em] text-[#FFCB9A] font-semibold">
+              CORE TOOLKIT // NLE &amp; OPS
+            </span>
+            <span class="h-2 w-2 rounded-full bg-[#FFCB9A]" aria-hidden="true"></span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5">
+            {TOOLKIT_SKILLS.map((skill) => (
+              <div class="flex items-center justify-between gap-3 rounded-xl border border-[#116466]/70 bg-[#2C3531]/75 px-4 py-2.5 hover:border-[#FFCB9A] transition-colors">
+                <span class="font-semibold text-sm text-[#D1E8E2]">{skill.name}</span>
+                <span class="text-xs text-[#D9B08C] text-right">{skill.detail}</span>
+              </div>
+            ))}
+          </div>
+
+          <!-- Compact Studio Spec Footer -->
+          <div class="mt-6 pt-4 border-t border-[#116466]/70 grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <div class="text-[#FFCB9A] uppercase tracking-wider text-[10px] font-semibold">Base</div>
+              <div class="text-[#D1E8E2] mt-0.5">{CONTACT_INFO.shortLocation}</div>
+            </div>
+            <div>
+              <div class="text-[#FFCB9A] uppercase tracking-wider text-[10px] font-semibold">Background</div>
+              <div class="text-[#D1E8E2] mt-0.5">B.Tech ECE &bull; VFX Diploma</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
